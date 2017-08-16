@@ -9,13 +9,6 @@ import org.dizitart.no2.Nitrite
 
 internal class NO2 private constructor() {
 
-    init {
-        val db = Nitrite.builder()
-                .compressed()
-                .filePath(Config.getConfigValue(context,""))
-                .openOrCreate("user", "password")
-    }
-
     private object Holder {
         val INSTANCE = NO2()
     }
@@ -24,9 +17,21 @@ internal class NO2 private constructor() {
         val instance: NO2 by lazy { Holder.INSTANCE }
     }
 
-    private lateinit var context: Context
-        set
-    private lateinit var db: Nitrite
+    var context: Context? = null
+        set(value) {
+            if (db == null)
+                db = Nitrite.builder()
+                        .compressed()
+                        .filePath(value!!.getFilesDir().getPath() + Config.databaseName(value) + ".db")
+                        .openOrCreate(Config.databaseLogin(value), Config.databasePassword(value))
+            field = value
+        }
+
+    public var db: Nitrite? = null
         get
+
+    init {
+
+    }
 }
 

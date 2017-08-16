@@ -35,6 +35,14 @@ public final class Config {
     }
 
     public static String databaseLogin(Context context) {
-        return getConfigValue(context, "db_login");
+        return getConfigValue(context, "nitrate_user_id");
+    }
+
+    public static String databasePassword(Context context) {
+        return getConfigValue(context, "nitrate_password");
+    }
+
+    public static String databaseName(Context context) {
+        return getConfigValue(context, "nitrate_name");
     }
 }
