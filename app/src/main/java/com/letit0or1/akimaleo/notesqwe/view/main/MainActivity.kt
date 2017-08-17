@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.letit0or1.akimaleo.notesqwe.R
-import com.letit0or1.akimaleo.notesqwe.database.NO2
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -29,8 +28,5 @@ class MainActivity : AppCompatActivity() {
 
         mAdapter = NotesRecyclerViewAdapter(ArrayList());
         mRecyclerView.setAdapter(mAdapter);
-
-        var q = NO2.instance.db
-//        print(q.toString())
     }
 }
