@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mAdapter: RecyclerView.Adapter<*>
-    private lateinit var mLayoutManager: RecyclerView.LayoutManager
+    private lateinit var mLayoutManager: GridLayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         mLayoutManager = GridLayoutManager(this, count)
         mRecyclerView.layoutManager = mLayoutManager
 
-        mAdapter = NotesRecyclerViewAdapter(ArrayList());
+        mAdapter = NotesRecyclerViewAdapter(ArrayList())
         mRecyclerView.setAdapter(mAdapter);
     }
 }

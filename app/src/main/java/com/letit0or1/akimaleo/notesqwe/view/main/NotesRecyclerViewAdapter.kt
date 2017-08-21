@@ -21,9 +21,9 @@ class NotesRecyclerViewAdapter(private val mDataset: ArrayList<Note>) : Recycler
         var date: TextView
 
         init {
-            label = view.findViewById(R.id.text) as TextView
+            label = view.findViewById(R.id.label) as TextView
             text = view.findViewById(R.id.text) as TextView
-            date = view.findViewById(R.id.text) as TextView
+            date = view.findViewById(R.id.time) as TextView
         }
     }
 
