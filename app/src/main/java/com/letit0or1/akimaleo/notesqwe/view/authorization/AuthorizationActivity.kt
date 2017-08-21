@@ -24,27 +24,27 @@ class AuthorizationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_authorization)
 
         mAuth = UserDataUtil.instance.firebase
-        mAuthListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
-            val user = firebaseAuth.currentUser
-            if (user != null) {
-                // User is signed in
-//                Log.d(FragmentActivity.TAG, "onAuthStateChanged:signed_in:" + user.uid)
-            } else {
-                // User is signed out
-//                Log.d(FragmentActivity.TAG, "onAuthStateChanged:signed_out")
-            }
-        }
-        UserDataUtil.instance.firebase.addAuthStateListener(mAuthListener)
+//        mAuthListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
+//            val user = firebaseAuth.currentUser
+//            if (user != null) {
+//                // User is signed in
+////                Log.d(FragmentActivity.TAG, "onAuthStateChanged:signed_in:" + user.uid)
+//            } else {
+//                // User is signed out
+////                Log.d(FragmentActivity.TAG, "onAuthStateChanged:signed_out")
+//            }
+//        }
+//        UserDataUtil.instance.firebase.addAuthStateListener(mAuthListener)
     }
 
     public fun signIn(view: View) {
         val emailStr = email.text.toString()
         val passwordStr = password.text.toString()
 
-        if (emailStr.isEmpty()) {
-            email.setError(getString(R.string.value_cant_by_blank))
-        } else if (!passwordStr.matches(Regex("(?:[a-z0-9!#\$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#\$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])"))) {
-            password.setError("This field can not be blank")
+        if (!emailStr.matches(Regex("(?:[a-z0-9!#\$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#\$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])"))) {
+            email.error = getString(R.string.email_is_incorrect)
+        } else if (passwordStr.isEmpty()) {
+            email.error = getString(R.string.value_cant_by_blank)
         } else {
             mAuth.signInWithEmailAndPassword(emailStr, passwordStr)
                     .addOnCompleteListener(this) { task ->
@@ -116,14 +116,14 @@ class AuthorizationActivity : AppCompatActivity() {
         setResult(Activity.RESULT_OK)
         finish()
     }
-
-    public override fun onStart() {
-        super.onStart()
-        mAuth.addAuthStateListener(mAuthListener)
-    }
-
-    public override fun onStop() {
-        super.onStop()
-        mAuth.removeAuthStateListener(mAuthListener)
-    }
+//
+//    public override fun onStart() {
+//        super.onStart()
+//        mAuth.addAuthStateListener(mAuthListener)
+//    }
+//
+//    public override fun onStop() {
+//        super.onStop()
+//        mAuth.removeAuthStateListener(mAuthListener)
+//    }
 }

@@ -4,7 +4,8 @@
     <string name="add_widget">Add widget</string>
     <string name="error_weak_password">Password should be at least 6 characters</string>
     <string name="error_invalid_email">Invalid email</string>
-    <string name="req_register_new_user">This user in`t registered.\\nDo you want to register?</string>
+    <string name="req_register_new_user">This user in`t registered.\nDo you want to register?</string>
     <string name="value_cant_by_blank">This field can not be blank</string>
     <string name="invalid_credentials">Invalid credentials</string>
+    <string name="email_is_incorrect">Email is incorrect</string>
 </resources>
