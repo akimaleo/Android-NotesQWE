@@ -33,8 +33,6 @@ class MainActivity : AppCompatActivity() {
 
         login.setOnClickListener {
             val intent = Intent(this, AuthorizationActivity::class.java)
-//            intent.putExtra("id", 5)
-//            intent.setFlag(Intent.FLAG_ACTIVITY_SINGLE_TOP)
             startActivity(intent)
         }
     }

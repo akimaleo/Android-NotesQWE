@@ -1,5 +1,8 @@
 package com.letit0or1.akimaleo.notesqwe.view.authorization
 
+import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
@@ -38,19 +41,30 @@ class AuthorizationActivity : AppCompatActivity() {
         val emailStr = email.text.toString()
         val passwordStr = password.text.toString()
 
-        if (emailStr.isEmpty()) email.setError("This field can not be blank");
-        else if (passwordStr.isEmpty()) password.setError("This field can not be blank");
-        else
+        if (emailStr.isEmpty()) {
+            email.setError(getString(R.string.value_cant_by_blank))
+        } else if (!passwordStr.matches(Regex("(?:[a-z0-9!#\$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#\$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])"))) {
+            password.setError("This field can not be blank")
+        } else {
             mAuth.signInWithEmailAndPassword(emailStr, passwordStr)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
-                            successLogin()
                             Log.e("FIREBASE", "sight in success")
+                            successLogin()
                         } else {
-                            signUp()
-                            Log.e("FIREBASE", "sight in error")
+                            if (!task.isSuccessful) {
+                                Log.e("FIREBASE", "sight in error")
+                                try {
+                                    throw task.getException()!!
+                                } catch (e: FirebaseAuthInvalidCredentialsException) {
+                                    invalidCredentials()
+                                } catch (e: FirebaseAuthInvalidUserException) {
+                                    reqRegister()
+                                }
+                            }
                         }
                     }
+        }
     }
 
     private fun signUp() {
@@ -79,7 +93,27 @@ class AuthorizationActivity : AppCompatActivity() {
                 }
     }
 
+    private fun reqRegister() {
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage(R.string.req_register_new_user)
+                .setPositiveButton(android.R.string.ok, DialogInterface.OnClickListener { dialog, id ->
+                    signUp()
+                })
+                .setNegativeButton(android.R.string.cancel, DialogInterface.OnClickListener { dialog, id ->
+                    // User cancelled the dialog
+                })
+        // Create the AlertDialog object and return it
+        builder.create().show()
+    }
+
+    private fun invalidCredentials() {
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage(R.string.invalid_credentials)
+        builder.create().show()
+    }
+
     private fun successLogin() {
+        setResult(Activity.RESULT_OK)
         finish()
     }
 
