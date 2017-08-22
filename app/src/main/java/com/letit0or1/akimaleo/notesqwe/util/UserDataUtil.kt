@@ -1,6 +1,7 @@
-package com.letit0or1.akimaleo.notesqwe.view
+package com.letit0or1.akimaleo.notesqwe.util
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 /**
  * Created by akimaleo on 21.08.17.
@@ -16,11 +17,15 @@ internal class UserDataUtil private constructor() {
         val instance: UserDataUtil by lazy { Holder.INSTANCE }
     }
 
-    lateinit var firebase: FirebaseAuth
+    var firebaseAuth: FirebaseAuth
+        get
+    var firebaseDatabase: FirebaseDatabase
         get
 
+
     init {
-        firebase = FirebaseAuth.getInstance()
+        firebaseAuth = FirebaseAuth.getInstance()
+        firebaseDatabase = FirebaseDatabase.getInstance()
     }
 
 }
