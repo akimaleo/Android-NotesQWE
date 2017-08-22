@@ -12,8 +12,16 @@ import org.dizitart.no2.objects.filters.ObjectFilters
  * Created by akimaleo on 22.08.17.
  */
 
-class SyncWorker constructor() {
+class SyncWorker private constructor() {
 
+    private object Holder {
+        val INSTANCE = SyncWorker()
+    }
+
+    companion object {
+        val instance: SyncWorker by lazy { Holder.INSTANCE }
+    }
+    
     //PUT DATA TO FIREBASE AND CACHE
     fun putData(list: ArrayList<Note>) {
         reference().setValue(list)

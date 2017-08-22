@@ -13,7 +13,7 @@ import java.util.*
  * Created by akimaleo on 16.08.17.
  */
 
-class NotesRecyclerViewAdapter(private val mDataset: ArrayList<Note>) : RecyclerView.Adapter<NotesRecyclerViewAdapter.ViewHolder>() {
+class NotesRecyclerViewAdapter(val mDataset: ArrayList<Note>) : RecyclerView.Adapter<NotesRecyclerViewAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var label: TextView
