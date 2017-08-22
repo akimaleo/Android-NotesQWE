@@ -1,9 +1,7 @@
 package com.letit0or1.akimaleo.notesqwe
 
 import android.app.Application
-import com.google.firebase.auth.FirebaseAuth
-import com.letit0or1.akimaleo.notesqwe.database.NO2
-import com.letit0or1.akimaleo.notesqwe.view.UserDataUtil
+import com.letit0or1.akimaleo.notesqwe.util.database.NO2
 
 
 /**

@@ -10,7 +10,7 @@ import android.view.View
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.*
 import com.letit0or1.akimaleo.notesqwe.R
-import com.letit0or1.akimaleo.notesqwe.view.UserDataUtil
+import com.letit0or1.akimaleo.notesqwe.util.FirebaseUtil
 import kotlinx.android.synthetic.main.activity_authorization.*
 
 
@@ -23,7 +23,7 @@ class AuthorizationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_authorization)
 
-        mAuth = UserDataUtil.instance.firebase
+        mAuth = FirebaseUtil.instance.firebaseAuth
 //        mAuthListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
 //            val user = firebaseAuth.currentUser
 //            if (user != null) {
@@ -34,7 +34,7 @@ class AuthorizationActivity : AppCompatActivity() {
 ////                Log.d(FragmentActivity.TAG, "onAuthStateChanged:signed_out")
 //            }
 //        }
-//        UserDataUtil.instance.firebase.addAuthStateListener(mAuthListener)
+//        FirebaseUtil.instance.firebase.addAuthStateListener(mAuthListener)
     }
 
     public fun signIn(view: View) {
@@ -71,7 +71,7 @@ class AuthorizationActivity : AppCompatActivity() {
         val emailStr = email.text.toString()
         val passwordStr = password.text.toString()
 
-        UserDataUtil.instance.firebase.createUserWithEmailAndPassword(emailStr, passwordStr)
+        mAuth.createUserWithEmailAndPassword(emailStr, passwordStr)
                 .addOnCompleteListener { task: Task<AuthResult> ->
                     if (!task.isSuccessful) {
                         try {

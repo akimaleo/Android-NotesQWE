@@ -7,5 +7,6 @@ import java.util.*
 /**
  * Created by akimaleo on 16.08.17.
  */
-
-data class Note(@Id var label: String, var text: String, var date: String, var editTime: Date) : Serializable
+data class Note(@Id var label: String, var text: String, var date: String, var editTime: Date) : Serializable {
+    constructor() : this("", "", "", Date())
+}

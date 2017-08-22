@@ -6,14 +6,15 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
-import com.google.firebase.database.FirebaseDatabase
+import android.util.Log
+import com.letit0or1.akimaleo.notesqwe.Note
 import com.letit0or1.akimaleo.notesqwe.R
+import com.letit0or1.akimaleo.notesqwe.util.webdata.SyncHandler
 import com.letit0or1.akimaleo.notesqwe.util.webdata.SyncWorker
-import com.letit0or1.akimaleo.notesqwe.util.UserDataUtil
 import com.letit0or1.akimaleo.notesqwe.view.authorization.AuthorizationActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MainActivity : AppCompatActivity() {
@@ -37,16 +38,27 @@ class MainActivity : AppCompatActivity() {
         mRecyclerView.setAdapter(mAdapter);
 
         get_data.setOnClickListener {
-            SyncWorker().downloadData()
+            SyncWorker().downloadData(object : SyncHandler {
+                override fun success(list: ArrayList<Note>) {
+                    Log.i("SUCCESS GET", list.size.toString())
+                }
+
+                override fun error(exception: Exception) {
+                    exception.printStackTrace()
+                }
+            })
         }
 
         write_time.setOnClickListener {
-            val database = FirebaseDatabase.getInstance()
-            var format = SimpleDateFormat("dd.MM.yyy HH:mm:ss")
-            val myRef = database.getReference(UserDataUtil.instance.firebaseAuth.currentUser?.email?.replace('.', '-', true))
-            myRef.setValue(format.format(Calendar.getInstance().time))
-
+            //            val database = FirebaseDatabase.getInstance()
+//            val myRef = database.getReference(FirebaseUtil.instance.firebaseAuth.currentUser?.email?.replace('.', '-', true))
+//            myRef.setValue(format.format(Calendar.getInstance().time))
 //            SyncWorker().putData(listOf({ Note() }))
+            var w = ArrayList<Note>()
+            w.add(Note("label", "zxc", "ehjghj", Calendar.getInstance().time))
+            w.add(Note("laqfqfwbel", "213", "ghj", Calendar.getInstance().time))
+            w.add(Note("''''l", "6666", "124124", Calendar.getInstance().time))
+            SyncWorker().putData(w)
         }
 
         login.setOnClickListener {
