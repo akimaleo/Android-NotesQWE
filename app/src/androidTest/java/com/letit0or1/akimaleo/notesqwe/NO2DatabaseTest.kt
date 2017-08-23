@@ -1,6 +1,5 @@
 package com.letit0or1.akimaleo.notesqwe
 
-import android.content.Context
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
 import com.letit0or1.akimaleo.notesqwe.util.database.NO2Notes
@@ -16,17 +15,13 @@ import java.util.*
  */
 @RunWith(AndroidJUnit4::class)
 class NO2DatabaseTest {
+
     @Test
     @Throws(Exception::class)
-    fun useAppContext() {
+    fun writeRead() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getTargetContext()
-        //WRITE READ 1 ITEM
-        testWriteUpdateReadNote(appContext)
-
-    }
-
-    private fun testWriteUpdateReadNote(appContext: Context) {
+        //Create DB instance
         val db = NO2Notes(appContext)
 
         //CLEAR OLD DATA
@@ -36,14 +31,23 @@ class NO2DatabaseTest {
         val noteBeforeSave = Note(UUID.randomUUID().toString(), "SAMPLE TEXT", Calendar.getInstance().time)
         db.save(noteBeforeSave)
         //READ
-        var noteAfterSave: Note = db.getAllNotes().get(0)
+        val noteAfterSave: Note = db.getAllNotes().get(0)
 
         //COMPARE
         assertEquals(noteBeforeSave, noteAfterSave)
+        db.db.close()
+    }
 
+    @Test
+    @Throws(Exception::class)
+    fun updateRead() {
+        // Context of the app under test.
+        val appContext = InstrumentationRegistry.getTargetContext()
+        //WRITE READ 1 ITEM
+        val db = NO2Notes(appContext)
 
-        //CREATE AND UPDATE
-        val noteBeforeUpdate = noteAfterSave.copy()
+        //READ OLD DATA AND UPDATE
+        val noteBeforeUpdate = db.getAllNotes().get(0)
         noteBeforeUpdate.text = "ANOTHER SAMPLE TEXT"
         db.updateOrInsert(noteBeforeUpdate)
         //READ
@@ -51,6 +55,6 @@ class NO2DatabaseTest {
 
         //COMPARE
         assertEquals(noteBeforeUpdate, noteAfterUpdate)
-
+        db.db.close()
     }
 }
