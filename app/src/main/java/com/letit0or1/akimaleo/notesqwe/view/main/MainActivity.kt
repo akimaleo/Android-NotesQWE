@@ -8,13 +8,13 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.letit0or1.akimaleo.notesqwe.Note
 import com.letit0or1.akimaleo.notesqwe.R
-import com.letit0or1.akimaleo.notesqwe.util.FirebaseUtil
-import com.letit0or1.akimaleo.notesqwe.util.webdata.SyncHandler
+import com.letit0or1.akimaleo.notesqwe.util.database.NO2Notes
 import com.letit0or1.akimaleo.notesqwe.util.webdata.SyncWorker
 import com.letit0or1.akimaleo.notesqwe.view.CActivity
 import com.letit0or1.akimaleo.notesqwe.view.authorization.AuthorizationActivity
 import com.letit0or1.akimaleo.notesqwe.view.create.CreateNoteActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 
 class MainActivity : CActivity() {
@@ -43,26 +43,16 @@ class MainActivity : CActivity() {
         }
         create.setOnClickListener {
             val intent = Intent(this, CreateNoteActivity::class.java)
-            startActivity(intent)
+            startActivityForResult(intent, REQ_CODE_CREATE)
         }
-
     }
 
     override fun onStart() {
         super.onStart()
 
-        fillData(SyncWorker.instance.getCacheData())
-        if (FirebaseUtil.instance.firebaseAuth.currentUser != null)
-            SyncWorker.instance.downloadData(object : SyncHandler {
-
-                override fun success(list: ArrayList<Note>) {
-                    fillData(list)
-                }
-
-                override fun error(exception: Exception) {
-                    exception.printStackTrace()
-                }
-            })
+        fillData(NO2Notes.instance.getAllNotes())
+        SyncWorker.instance.syncData()
+        
     }
 
     public fun fillData(list: ArrayList<Note>) {
@@ -77,7 +67,7 @@ class MainActivity : CActivity() {
             when (requestCode) {
                 REQ_CODE_CREATE -> {
                     var uid = data?.extras?.getString("uid")
-//                    SyncWorker.instance.putData()
+
                 }
             }
         }
