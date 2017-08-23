@@ -52,7 +52,8 @@ class SyncWorker private constructor() {
     //CACHE DATA TO NO2Notes
     private fun cacheData(list: ArrayList<Note>) {
         NO2Notes.instance.clearDb()
-        NO2Notes.instance.save(list)
+        if (list.size > 0)
+            NO2Notes.instance.save(list)
     }
 
     //FORCE PUSH DATA TO WEB
@@ -63,7 +64,9 @@ class SyncWorker private constructor() {
                 override fun success(list: ArrayList<Note>) {
                     val newList = mergeNotes(list, NO2Notes.instance.getAllNotes());
                     reference().setValue(newList)
-                    NO2Notes.instance.save(newList)
+                    NO2Notes.instance.clearDb()
+                    if (newList.size > 0)
+                        NO2Notes.instance.save(newList)
                 }
 
                 override fun error(exception: Exception) {
@@ -107,7 +110,10 @@ class SyncWorker private constructor() {
                 val t = object : GenericTypeIndicator<ArrayList<Note>>() {
                 }
 
-                val value = dataSnapshot.getValue(t)
+                var value = dataSnapshot.getValue(t)
+                if (value == null) {
+                    value = ArrayList()
+                }
 
                 if (hanler != null)
                     hanler.success(value)
