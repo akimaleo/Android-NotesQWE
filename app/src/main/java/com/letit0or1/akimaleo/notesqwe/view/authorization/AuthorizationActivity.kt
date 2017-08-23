@@ -11,10 +11,11 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.*
 import com.letit0or1.akimaleo.notesqwe.R
 import com.letit0or1.akimaleo.notesqwe.util.FirebaseUtil
+import com.letit0or1.akimaleo.notesqwe.view.CActivity
 import kotlinx.android.synthetic.main.activity_authorization.*
 
 
-class AuthorizationActivity : AppCompatActivity() {
+class AuthorizationActivity : CActivity() {
 
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mAuthListener: FirebaseAuth.AuthStateListener

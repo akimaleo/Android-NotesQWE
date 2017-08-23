@@ -6,6 +6,8 @@
 
     <color name="colorBorder">#dfdfdf</color>
 
+    <color name="colorBackground">#f7f7f7</color>
+
     <color name="text">#434343</color>
     <color name="textBody">#828282</color>
     <color name="textLabel">#000</color>

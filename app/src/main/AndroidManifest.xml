@@ -31,7 +31,8 @@
                 android:resource="@xml/notes_widget_info" />
         </receiver>
 
-        <activity android:name=".view.authorization.AuthorizationActivity"></activity>
+        <activity android:name=".view.authorization.AuthorizationActivity" />
+        <activity android:name=".view.create.CreateNoteActivity"></activity>
     </application>
 
 </manifest>

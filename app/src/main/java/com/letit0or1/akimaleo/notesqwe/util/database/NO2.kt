@@ -1,8 +1,11 @@
 package com.letit0or1.akimaleo.notesqwe.util.database
 
 import android.content.Context
+import com.letit0or1.akimaleo.notesqwe.Note
 import com.letit0or1.akimaleo.notesqwe.util.Config
 import org.dizitart.no2.Nitrite
+import org.dizitart.no2.objects.ObjectFilter
+import org.dizitart.no2.objects.ObjectRepository
 
 /**
  * Created by akimaleo on 16.08.17.
@@ -29,6 +32,29 @@ internal class NO2 private constructor() {
 
     lateinit var db: Nitrite
         get
+
+    fun getAllNotes(): ArrayList<Note> {
+        val repository: ObjectRepository<Note> = NO2.instance.db.getRepository(Note::class.java)
+        val dd = ArrayList<Note>()
+        repository.find().forEach {
+            dd.add(it)
+        }
+        return dd
+    }
+
+    fun saveItem(note: Note) {
+        val repository: ObjectRepository<Note> = NO2.instance.db.getRepository(Note::class.java)
+        repository.insert(note)
+    }
+
+    fun updateItem(note: Note) {
+        val repository: ObjectRepository<Note> = NO2.instance.db.getRepository(Note::class.java)
+        repository.update(note)
+    }
+    fun getItem(uid: String) {
+        val repository: ObjectRepository<Note> = NO2.instance.db.getRepository(Note::class.java)
+//        repository.find(ObjectFilter())
+    }
 
     init {
 
