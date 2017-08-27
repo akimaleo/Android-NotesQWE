@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.view.View
 import com.google.firebase.auth.FirebaseAuth
 import com.letit0or1.akimaleo.notesqwe.R
-import com.letit0or1.akimaleo.notesqwe.view.CActivity
+import com.letit0or1.akimaleo.notesqwe.view.view.CActivity
 import kotlinx.android.synthetic.main.activity_authorization.*
 
 

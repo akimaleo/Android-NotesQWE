@@ -27,8 +27,10 @@ class AuthorizationPresenterImpl(var view: AuthorizationView) : AuthorizationPre
         } else if (password.isEmpty()) {
             view.passwordError(context.getString(R.string.value_cant_by_blank))
         } else {
+            view.showLoading()
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
+                        view.hideLoading()
                         if (task.isSuccessful) {
                             Log.e("FIREBASE", "sight in success")
                             view.loginSuccess()
@@ -49,8 +51,10 @@ class AuthorizationPresenterImpl(var view: AuthorizationView) : AuthorizationPre
     }
 
     override fun register(email: String, password: String) {
+        view.showLoading()
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task: Task<AuthResult> ->
+                    view.hideLoading()
                     if (!task.isSuccessful) {
                         try {
                             throw task.getException()!!

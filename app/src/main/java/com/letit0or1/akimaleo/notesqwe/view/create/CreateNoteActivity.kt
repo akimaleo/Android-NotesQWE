@@ -1,9 +1,8 @@
 package com.letit0or1.akimaleo.notesqwe.view.create
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import com.letit0or1.akimaleo.notesqwe.R
-import com.letit0or1.akimaleo.notesqwe.view.CActivity
+import com.letit0or1.akimaleo.notesqwe.view.view.CActivity
 import kotlinx.android.synthetic.main.activity_create_note.*
 import java.text.SimpleDateFormat
 import java.util.*

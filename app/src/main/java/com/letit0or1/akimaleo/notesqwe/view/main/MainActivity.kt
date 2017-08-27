@@ -10,9 +10,9 @@ import com.letit0or1.akimaleo.notesqwe.Note
 import com.letit0or1.akimaleo.notesqwe.R
 import com.letit0or1.akimaleo.notesqwe.util.database.NO2Notes
 import com.letit0or1.akimaleo.notesqwe.util.webdata.SyncWorker
-import com.letit0or1.akimaleo.notesqwe.view.CActivity
 import com.letit0or1.akimaleo.notesqwe.view.authorization.AuthorizationActivity
 import com.letit0or1.akimaleo.notesqwe.view.create.CreateNoteActivity
+import com.letit0or1.akimaleo.notesqwe.view.view.CActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
@@ -49,10 +49,10 @@ class MainActivity : CActivity() {
 
     override fun onStart() {
         super.onStart()
-
+//        showLoading()
         fillData(NO2Notes.instance.getAllNotes())
         SyncWorker.instance.syncData()
-        
+
     }
 
     public fun fillData(list: ArrayList<Note>) {
