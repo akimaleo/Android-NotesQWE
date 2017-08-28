@@ -8,6 +8,7 @@ import android.widget.TextView
 import com.letit0or1.akimaleo.notesqwe.Note
 import com.letit0or1.akimaleo.notesqwe.R
 import com.letit0or1.akimaleo.notesqwe.view.create.OnItemClickListener
+import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -16,13 +17,17 @@ import java.util.*
 
 class NotesRecyclerViewAdapter(val mDataset: ArrayList<Note>) : RecyclerView.Adapter<NotesRecyclerViewAdapter.ViewHolder>() {
 
-    private var onClickListener: OnItemClickListener
+    var onClickListener: OnItemClickListener
+        set
+
+    private val formaterDate: SimpleDateFormat
 
     init {
         onClickListener = object : OnItemClickListener {
             override fun onClick(view: View, o: Any) {
             }
         }
+        formaterDate = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -45,12 +50,23 @@ class NotesRecyclerViewAdapter(val mDataset: ArrayList<Note>) : RecyclerView.Ada
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.text.text = mDataset[0].text
-        holder.itemView.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                onClickListener.onClick(v!!, mDataset[0])
-            }
-        })
+        val note = mDataset[position]
+
+        val content = note.text.split(Regex("\n"), 0)
+        holder.label.text = content[0]
+
+        if (content.size > 1) {
+
+            holder.text.text = ""
+            for (i in 1 until content.size)
+                holder.text.text = holder.text.text.toString() +
+                        "\n" + content[i]
+        } else {
+            holder.text.visibility = View.GONE
+        }
+
+        holder.date.text = formaterDate.format(note.editDate)
+        holder.itemView.setOnClickListener { v -> onClickListener.onClick(v!!, note) }
     }
 
     override fun getItemCount(): Int {

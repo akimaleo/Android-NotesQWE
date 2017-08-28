@@ -55,7 +55,7 @@ internal class NO2Notes private constructor() {
         repository.remove(ObjectFilters.ALL)
     }
 
-    fun save(list: ArrayList<Note>?) {
+    fun clearAndSave(list: ArrayList<Note>?) {
         val repository: ObjectRepository<Note> = db.getRepository(Note::class.java)
 
         if (list == null || list.isEmpty()) {

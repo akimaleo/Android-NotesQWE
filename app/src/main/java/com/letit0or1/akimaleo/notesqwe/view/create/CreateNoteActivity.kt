@@ -3,6 +3,7 @@ package com.letit0or1.akimaleo.notesqwe.view.create
 import android.os.Bundle
 import com.letit0or1.akimaleo.notesqwe.Note
 import com.letit0or1.akimaleo.notesqwe.R
+import com.letit0or1.akimaleo.notesqwe.util.database.NO2Notes
 import com.letit0or1.akimaleo.notesqwe.util.webdata.SyncWorker
 import com.letit0or1.akimaleo.notesqwe.view.view.CActivity
 import kotlinx.android.synthetic.main.activity_create_note.*
@@ -13,6 +14,8 @@ class CreateNoteActivity : CActivity() {
 
     private lateinit var uid: String
     private lateinit var calDate: Date
+
+    private lateinit var editNote: Note
 
     val formaterDate: SimpleDateFormat
     val formaterTime: SimpleDateFormat
@@ -29,9 +32,15 @@ class CreateNoteActivity : CActivity() {
         arrow_back.setOnClickListener { onBackPressed() }
         uid = if (intent.getStringExtra("uid") == null) "" else intent.getStringExtra("uid")
 
-        if (uid.isEmpty()) {
-            calDate = Calendar.getInstance().time
+        calDate = if (uid.isEmpty()) {
+
+            Calendar.getInstance().time
+
         } else {
+
+            editNote = NO2Notes.instance.getItem(uid)!!
+            content.setText(editNote.text)
+            editNote.editDate
 
         }
 
@@ -51,7 +60,7 @@ class CreateNoteActivity : CActivity() {
         } else {
 
             SyncWorker.instance.putItem(Note(if (uid.isEmpty()) UUID.randomUUID().toString() else uid,
-                    contentText,
+                    content.text.toString(),
                     calDate))
 
         }

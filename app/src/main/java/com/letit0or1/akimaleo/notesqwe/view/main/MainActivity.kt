@@ -6,12 +6,14 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.View
 import com.letit0or1.akimaleo.notesqwe.Note
 import com.letit0or1.akimaleo.notesqwe.R
 import com.letit0or1.akimaleo.notesqwe.util.database.NO2Notes
 import com.letit0or1.akimaleo.notesqwe.util.webdata.SyncWorker
 import com.letit0or1.akimaleo.notesqwe.view.authorization.AuthorizationActivity
 import com.letit0or1.akimaleo.notesqwe.view.create.CreateNoteActivity
+import com.letit0or1.akimaleo.notesqwe.view.create.OnItemClickListener
 import com.letit0or1.akimaleo.notesqwe.view.view.CActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -32,7 +34,7 @@ class MainActivity : CActivity() {
         mRecyclerView = recycler_view
         mRecyclerView.setHasFixedSize(true)
 
-        var count = if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) 2 else 3
+        val count = if (resources.getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) 2 else 3
         mLayoutManager = GridLayoutManager(this, count)
         mRecyclerView.layoutManager = mLayoutManager as RecyclerView.LayoutManager?
 
@@ -40,6 +42,13 @@ class MainActivity : CActivity() {
         mRecyclerView.setAdapter(mAdapter)
 
 
+        mAdapter.onClickListener = object : OnItemClickListener {
+            override fun onClick(view: View, o: Any) {
+                val intent = Intent(this@MainActivity, CreateNoteActivity::class.java)
+                intent.putExtra("uid", (o as Note).uid)
+                startActivityForResult(intent, REQ_CODE_CREATE)
+            }
+        }
         login.setOnClickListener {
             val intent = Intent(this, AuthorizationActivity::class.java)
             startActivity(intent)
@@ -56,7 +65,7 @@ class MainActivity : CActivity() {
         SyncWorker.instance.syncData()
     }
 
-    public fun fillData(list: ArrayList<Note>) {
+    fun fillData(list: ArrayList<Note>) {
         mAdapter.mDataset.clear()
         mAdapter.mDataset.addAll(list)
         mAdapter.notifyDataSetChanged()
@@ -72,6 +81,5 @@ class MainActivity : CActivity() {
             }
         }
         super.onActivityResult(requestCode, resultCode, data)
-
     }
 }

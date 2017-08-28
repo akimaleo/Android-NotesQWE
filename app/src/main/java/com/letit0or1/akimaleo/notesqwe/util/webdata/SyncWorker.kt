@@ -52,7 +52,7 @@ class SyncWorker private constructor() {
             datas.add(note)
             reference().setValue(datas)
         }
-        NO2Notes.instance.save(note)
+        NO2Notes.instance.updateOrInsert(note)
     }
 
     fun removeItem(uid: String) {
@@ -68,7 +68,7 @@ class SyncWorker private constructor() {
         list.remove(note)
 
         //CACHE NEW COLLECTION
-        NO2Notes.instance.save(list)
+        NO2Notes.instance.clearAndSave(list)
         //PUSH TO WEB
         if (isAuthorized()) {
             reference().setValue(list)
@@ -86,7 +86,7 @@ class SyncWorker private constructor() {
                     reference().setValue(newList)
                     NO2Notes.instance.clearDb()
                     if (newList.size > 0)
-                        NO2Notes.instance.save(newList)
+                        NO2Notes.instance.clearAndSave(newList)
                 }
 
                 override fun error(exception: Exception) {
@@ -98,7 +98,7 @@ class SyncWorker private constructor() {
     }
 
     //RETRIEVE DATA FROM WEB
-    private fun downloadData(hanler: SyncHandler?) {
+    private fun downloadData(handler: SyncHandler?) {
         reference().addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val t = object : GenericTypeIndicator<ArrayList<Note>>() {
@@ -109,15 +109,14 @@ class SyncWorker private constructor() {
                     value = ArrayList()
                 }
 
-                if (hanler != null)
-                    hanler.success(value)
+                if (handler != null)
+                    handler.success(value)
 
-                NO2Notes.instance.clearDb()
-                NO2Notes.instance.save(value)
+                NO2Notes.instance.clearAndSave(value)
             }
 
             override fun onCancelled(error: DatabaseError) {
-                if (hanler != null)
+                if (handler != null)
                     error.toException()
                 // Failed to read value
             }
