@@ -55,14 +55,18 @@ internal class NO2Notes private constructor() {
         repository.remove(ObjectFilters.ALL)
     }
 
-    fun save(list: ArrayList<Note>) {
+    fun save(list: ArrayList<Note>?) {
         val repository: ObjectRepository<Note> = db.getRepository(Note::class.java)
-        repository.insert(list.toArray(Array<Note>(list.size, { i -> list.get(i) })))
+
+        if (list == null || list.isEmpty()) {
+            clearDb()
+        } else {
+            repository.insert(list.toArray(Array<Note>(list.size, { i -> list.get(i) })))
+        }
     }
 
     fun save(note: Note) {
-        val repository: ObjectRepository<Note> = db.getRepository(Note::class.java)
-        repository.insert(note)
+        updateOrInsert(note)
     }
 
     fun updateOrInsert(note: Note) {
@@ -70,9 +74,12 @@ internal class NO2Notes private constructor() {
         repository.update(note, true)
     }
 
-    fun getItem(uid: String) {
-        val repository: ObjectRepository<Note> = db.getRepository(Note::class.java)
-//        repository.find(ObjectFilter())
+    fun getItem(uid: String): Note? {
+        for (note in NO2Notes.instance.getAllNotes()) {
+            if (note.uid == uid)
+                return note
+        }
+        return null
     }
 
     init {

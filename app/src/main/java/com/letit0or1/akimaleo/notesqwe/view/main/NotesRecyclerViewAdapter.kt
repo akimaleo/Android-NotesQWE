@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.letit0or1.akimaleo.notesqwe.Note
 import com.letit0or1.akimaleo.notesqwe.R
+import com.letit0or1.akimaleo.notesqwe.view.create.OnItemClickListener
 import java.util.*
 
 /**
@@ -14,6 +15,15 @@ import java.util.*
  */
 
 class NotesRecyclerViewAdapter(val mDataset: ArrayList<Note>) : RecyclerView.Adapter<NotesRecyclerViewAdapter.ViewHolder>() {
+
+    private var onClickListener: OnItemClickListener
+
+    init {
+        onClickListener = object : OnItemClickListener {
+            override fun onClick(view: View, o: Any) {
+            }
+        }
+    }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var label: TextView
@@ -36,7 +46,11 @@ class NotesRecyclerViewAdapter(val mDataset: ArrayList<Note>) : RecyclerView.Ada
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.text.text = mDataset[0].text
-
+        holder.itemView.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                onClickListener.onClick(v!!, mDataset[0])
+            }
+        })
     }
 
     override fun getItemCount(): Int {

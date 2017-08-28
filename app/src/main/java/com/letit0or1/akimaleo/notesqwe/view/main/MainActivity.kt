@@ -19,6 +19,8 @@ import java.util.*
 
 class MainActivity : CActivity() {
 
+    val REQ_CODE_CREATE = 0;
+
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mAdapter: NotesRecyclerViewAdapter
     private lateinit var mLayoutManager: GridLayoutManager
@@ -37,6 +39,7 @@ class MainActivity : CActivity() {
         mAdapter = NotesRecyclerViewAdapter(ArrayList())
         mRecyclerView.setAdapter(mAdapter)
 
+
         login.setOnClickListener {
             val intent = Intent(this, AuthorizationActivity::class.java)
             startActivity(intent)
@@ -49,10 +52,8 @@ class MainActivity : CActivity() {
 
     override fun onStart() {
         super.onStart()
-//        showLoading()
         fillData(NO2Notes.instance.getAllNotes())
         SyncWorker.instance.syncData()
-
     }
 
     public fun fillData(list: ArrayList<Note>) {
@@ -61,7 +62,6 @@ class MainActivity : CActivity() {
         mAdapter.notifyDataSetChanged()
     }
 
-    val REQ_CODE_CREATE = 0;
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {

@@ -43,22 +43,42 @@ class SyncWorker private constructor() {
         }
     }
 
+    fun isAuthorized(): Boolean = FirebaseUtil.instance.firebaseAuth.currentUser != null
+
     //PUT DATA TO FIREBASE AND CACHE
-    fun putData(list: ArrayList<Note>) {
-        reference().setValue(list)
-        cacheData(list)
+    fun putItem(note: Note) {
+        if (isAuthorized()) {
+            val datas = NO2Notes.instance.getAllNotes();
+            datas.add(note)
+            reference().setValue(datas)
+        }
+        NO2Notes.instance.save(note)
     }
 
-    //CACHE DATA TO NO2Notes
-    private fun cacheData(list: ArrayList<Note>) {
-        NO2Notes.instance.clearDb()
-        if (list.size > 0)
-            NO2Notes.instance.save(list)
+    fun removeItem(uid: String) {
+
+        if (uid.isEmpty())
+            return
+
+        //GET OLD DATA AND COLLECTION
+        val note = NO2Notes.instance.getItem(uid)
+        val list = NO2Notes.instance.getAllNotes()
+
+        //REMOVE ITEM WITH UID
+        list.remove(note)
+
+        //CACHE NEW COLLECTION
+        NO2Notes.instance.save(list)
+        //PUSH TO WEB
+        if (isAuthorized()) {
+            reference().setValue(list)
+        }
     }
 
-    //FORCE PUSH DATA TO WEB
-    public fun syncData() {
-        if (FirebaseUtil.instance.firebaseAuth.currentUser != null) {
+
+    //DOWNLOAD, MERGE, CACHE AND PUSH TO WEB
+    fun syncData() {
+        if (isAuthorized()) {
             downloadData(object : SyncHandler {
 
                 override fun success(list: ArrayList<Note>) {
@@ -74,37 +94,11 @@ class SyncWorker private constructor() {
                 }
             })
             reference().push()
-
         }
     }
-
-    private fun mergeNotes(first: ArrayList<Note>, second: ArrayList<Note>): ArrayList<Note> {
-        val list: ArrayList<Note> = ArrayList()
-        val hashMap: HashMap<String, Note> = HashMap();
-
-        for (i in first) {
-
-            hashMap.put(i.uid, i)
-            var lastCount = hashMap.count()
-
-            for (j in second) {
-
-                if (i.uid == j.uid) {
-                    hashMap[i.uid] = if (i.editDate > j.editDate) i else j
-                    continue
-                }
-
-                if (hashMap.containsKey(j.uid)) continue
-
-                hashMap.put(j.uid, j)
-            }
-        }
-        return list
-    }
-
 
     //RETRIEVE DATA FROM WEB
-    public fun downloadData(hanler: SyncHandler?) {
+    private fun downloadData(hanler: SyncHandler?) {
         reference().addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val t = object : GenericTypeIndicator<ArrayList<Note>>() {
@@ -117,7 +111,9 @@ class SyncWorker private constructor() {
 
                 if (hanler != null)
                     hanler.success(value)
-                cacheData(value)
+
+                NO2Notes.instance.clearDb()
+                NO2Notes.instance.save(value)
             }
 
             override fun onCancelled(error: DatabaseError) {
