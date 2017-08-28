@@ -26,6 +26,7 @@ class CreateNoteActivity : CActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_note)
 
+        arrow_back.setOnClickListener { onBackPressed() }
         uid = if (intent.getStringExtra("uid") == null) "" else intent.getStringExtra("uid")
 
         if (uid.isEmpty()) {
