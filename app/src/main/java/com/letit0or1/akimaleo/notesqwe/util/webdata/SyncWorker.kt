@@ -27,8 +27,6 @@ class SyncWorker private constructor() {
             for (i in first) {
 
                 hashMap.put(i.uid, i)
-                var lastCount = hashMap.count()
-
                 for (j in second) {
 
                     if (i.uid == j.uid) {
