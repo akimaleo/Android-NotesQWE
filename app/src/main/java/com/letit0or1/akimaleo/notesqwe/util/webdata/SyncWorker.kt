@@ -84,7 +84,7 @@ class SyncWorker private constructor() {
             downloadData(object : SyncHandler {
 
                 override fun success(list: ArrayList<Note>) {
-                    val newList = mergeNotes(list, NO2Notes.instance.getAllNotes());
+                    val newList = mergeNotes(list, NO2Notes.instance.getAllNotes())
                     reference().setValue(newList)
                     NO2Notes.instance.clearDb()
 
@@ -106,7 +106,7 @@ class SyncWorker private constructor() {
 
     //RETRIEVE DATA FROM WEB
     private fun downloadData(handler: SyncHandler?) {
-        reference().addValueEventListener(object : ValueEventListener {
+        reference().addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val t = object : GenericTypeIndicator<ArrayList<Note>>() {
                 }
