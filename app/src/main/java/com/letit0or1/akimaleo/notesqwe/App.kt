@@ -1,6 +1,8 @@
 package com.letit0or1.akimaleo.notesqwe
 
 import android.app.Application
+import com.google.firebase.FirebaseApp
+import com.letit0or1.akimaleo.notesqwe.util.FirebaseUtil
 import com.letit0or1.akimaleo.notesqwe.util.database.NO2Notes
 
 
@@ -12,6 +14,5 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         NO2Notes.instance.context = applicationContext
-
     }
 }

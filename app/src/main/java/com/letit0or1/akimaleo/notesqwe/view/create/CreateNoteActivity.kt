@@ -1,5 +1,6 @@
 package com.letit0or1.akimaleo.notesqwe.view.create
 
+import android.app.Activity
 import android.os.Bundle
 import com.letit0or1.akimaleo.notesqwe.Note
 import com.letit0or1.akimaleo.notesqwe.R
@@ -17,13 +18,8 @@ class CreateNoteActivity : CActivity() {
 
     private lateinit var editNote: Note
 
-    val formaterDate: SimpleDateFormat
-    val formaterTime: SimpleDateFormat
-
-    init {
-        formaterDate = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
-        formaterTime = SimpleDateFormat("HH:mm", Locale.getDefault())
-    }
+    private val formatterDate: SimpleDateFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+    private val formatterTime: SimpleDateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,12 +36,15 @@ class CreateNoteActivity : CActivity() {
 
             editNote = NO2Notes.instance.getItem(uid)!!
             content.setText(editNote.text)
-            editNote.editDate
+            Date(editNote.editDate)
 
         }
 
-        date.text = formaterDate.format(calDate)
-        time.text = formaterTime.format(calDate)
+        date.text = formatterDate.format(calDate)
+        time.text = formatterTime.format(calDate)
+
+        //Cursor to end of the text
+        content.setSelection(content.text.length)
     }
 
     override fun onBackPressed() {
@@ -61,9 +60,10 @@ class CreateNoteActivity : CActivity() {
 
             SyncWorker.instance.putItem(Note(if (uid.isEmpty()) UUID.randomUUID().toString() else uid,
                     content.text.toString(),
-                    calDate))
+                    calDate.time))
 
         }
-        super.onBackPressed()
+        setResult(Activity.RESULT_OK)
+        finish()
     }
 }

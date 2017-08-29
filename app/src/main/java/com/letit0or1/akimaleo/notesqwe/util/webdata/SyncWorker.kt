@@ -4,6 +4,8 @@ import com.google.firebase.database.*
 import com.letit0or1.akimaleo.notesqwe.Note
 import com.letit0or1.akimaleo.notesqwe.util.FirebaseUtil
 import com.letit0or1.akimaleo.notesqwe.util.database.NO2Notes
+import com.letit0or1.akimaleo.notesqwe.util.ottobus.BroadcastEvent
+import com.letit0or1.akimaleo.notesqwe.util.ottobus.OttoSingle
 
 
 /**
@@ -85,15 +87,20 @@ class SyncWorker private constructor() {
                     val newList = mergeNotes(list, NO2Notes.instance.getAllNotes());
                     reference().setValue(newList)
                     NO2Notes.instance.clearDb()
+
                     if (newList.size > 0)
                         NO2Notes.instance.clearAndSave(newList)
+
+                    OttoSingle.instance.bus.post(BroadcastEvent())
+                    reference().onDisconnect()
+                    reference().push()
+
                 }
 
                 override fun error(exception: Exception) {
                     exception.printStackTrace()
                 }
             })
-            reference().push()
         }
     }
 
@@ -109,10 +116,9 @@ class SyncWorker private constructor() {
                     value = ArrayList()
                 }
 
-                if (handler != null)
-                    handler.success(value)
-
                 NO2Notes.instance.clearAndSave(value)
+
+                handler?.success(value)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -124,7 +130,6 @@ class SyncWorker private constructor() {
     }
 
     //GET FIREBASE REFERENCE
-    private fun reference(): DatabaseReference {
-        return FirebaseUtil.instance.firebaseDatabase.getReference(FirebaseUtil.instance.firebaseAuth.currentUser?.uid)
-    }
+    private fun reference(): DatabaseReference =
+            FirebaseUtil.instance.firebaseDatabase.getReference(FirebaseUtil.instance.firebaseAuth.currentUser?.uid)
 }

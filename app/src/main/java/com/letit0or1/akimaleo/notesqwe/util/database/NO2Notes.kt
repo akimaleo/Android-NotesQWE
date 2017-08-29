@@ -6,6 +6,10 @@ import com.letit0or1.akimaleo.notesqwe.util.Config
 import org.dizitart.no2.Nitrite
 import org.dizitart.no2.objects.ObjectRepository
 import org.dizitart.no2.objects.filters.ObjectFilters
+import org.dizitart.no2.tool.Exporter
+import org.dizitart.no2.tool.Importer
+import java.io.File
+
 
 /**
  * Created by akimaleo on 16.08.17.
@@ -13,12 +17,18 @@ import org.dizitart.no2.objects.filters.ObjectFilters
 
 internal class NO2Notes private constructor() {
 
+    lateinit var repository: ObjectRepository<Note>
+
+    init {
+    }
+
     //FOR UNIT TEST
     constructor(context: Context) : this() {
         db = Nitrite.builder()
                 .compressed()
                 .filePath(context.getFilesDir().getPath() + "test" + ".db")
                 .openOrCreate("test", "test")
+        repository = db.getRepository(Note::class.java)
     }
 
     private object Holder {
@@ -35,6 +45,7 @@ internal class NO2Notes private constructor() {
                     .compressed()
                     .filePath(value!!.getFilesDir().getPath() + Config.databaseName(value) + ".db")
                     .openOrCreate(Config.databaseLogin(value), Config.databasePassword(value))
+            repository = db.getRepository(Note::class.java)
             field = value
         }
 
@@ -42,7 +53,6 @@ internal class NO2Notes private constructor() {
         get
 
     fun getAllNotes(): ArrayList<Note> {
-        val repository: ObjectRepository<Note> = db.getRepository(Note::class.java)
         val dd = ArrayList<Note>()
         repository.find().forEach {
             dd.add(it)
@@ -51,17 +61,16 @@ internal class NO2Notes private constructor() {
     }
 
     fun clearDb() {
-        val repository: ObjectRepository<Note> = db.getRepository(Note::class.java)
         repository.remove(ObjectFilters.ALL)
     }
 
     fun clearAndSave(list: ArrayList<Note>?) {
-        val repository: ObjectRepository<Note> = db.getRepository(Note::class.java)
+        clearDb()
 
-        if (list == null || list.isEmpty()) {
-            clearDb()
-        } else {
-            repository.insert(list.toArray(Array<Note>(list.size, { i -> list.get(i) })))
+        if (list != null) {
+            for (note in list) {
+                updateOrInsert(note)
+            }
         }
     }
 
@@ -70,7 +79,6 @@ internal class NO2Notes private constructor() {
     }
 
     fun updateOrInsert(note: Note) {
-        val repository: ObjectRepository<Note> = db.getRepository(Note::class.java)
         repository.update(note, true)
     }
 
@@ -82,8 +90,17 @@ internal class NO2Notes private constructor() {
         return null
     }
 
-    init {
+    fun exportSchema(file: File) {
+        // Export data to a file
+        val exporter = Exporter.of(db)
+        exporter.exportTo(file)
 
+    }
+
+    fun importSchema(file: File) {
+        //Import data from the file
+        val importer = Importer.of(db)
+        importer.importFrom(file)
     }
 }
 

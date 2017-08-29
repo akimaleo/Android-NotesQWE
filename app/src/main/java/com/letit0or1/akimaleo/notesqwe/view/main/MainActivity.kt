@@ -4,17 +4,20 @@ import android.app.Activity
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
 import com.letit0or1.akimaleo.notesqwe.Note
 import com.letit0or1.akimaleo.notesqwe.R
 import com.letit0or1.akimaleo.notesqwe.util.database.NO2Notes
+import com.letit0or1.akimaleo.notesqwe.util.ottobus.BroadcastEvent
 import com.letit0or1.akimaleo.notesqwe.util.webdata.SyncWorker
 import com.letit0or1.akimaleo.notesqwe.view.authorization.AuthorizationActivity
 import com.letit0or1.akimaleo.notesqwe.view.create.CreateNoteActivity
 import com.letit0or1.akimaleo.notesqwe.view.create.OnItemClickListener
 import com.letit0or1.akimaleo.notesqwe.view.view.CActivity
+import com.squareup.otto.Bus
+import com.squareup.otto.Subscribe
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
@@ -25,7 +28,8 @@ class MainActivity : CActivity() {
 
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mAdapter: NotesRecyclerViewAdapter
-    private lateinit var mLayoutManager: GridLayoutManager
+    private lateinit var mLayoutManager: StaggeredGridLayoutManager
+    var bus = Bus()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +39,7 @@ class MainActivity : CActivity() {
         mRecyclerView.setHasFixedSize(true)
 
         val count = if (resources.getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) 2 else 3
-        mLayoutManager = GridLayoutManager(this, count)
+        mLayoutManager = StaggeredGridLayoutManager(count, resources.getConfiguration().orientation)
         mRecyclerView.layoutManager = mLayoutManager as RecyclerView.LayoutManager?
 
         mAdapter = NotesRecyclerViewAdapter(ArrayList())
@@ -75,11 +79,26 @@ class MainActivity : CActivity() {
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 REQ_CODE_CREATE -> {
-                    var uid = data?.extras?.getString("uid")
-
+//                    var uid = data?.extras?.getString("uid")
+                    fillData(NO2Notes.instance.getAllNotes())
                 }
             }
         }
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        bus.register(this)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        bus.unregister(this)
+    }
+
+    @Subscribe
+    fun answerAvailable(event: BroadcastEvent) {
+        fillData(NO2Notes.instance.getAllNotes())
     }
 }
