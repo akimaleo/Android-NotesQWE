@@ -1,6 +1,5 @@
 package com.letit0or1.akimaleo.notesqwe.view.main
 
-import android.app.Activity
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
@@ -11,12 +10,12 @@ import com.letit0or1.akimaleo.notesqwe.Note
 import com.letit0or1.akimaleo.notesqwe.R
 import com.letit0or1.akimaleo.notesqwe.util.database.NO2Notes
 import com.letit0or1.akimaleo.notesqwe.util.ottobus.BroadcastEvent
+import com.letit0or1.akimaleo.notesqwe.util.ottobus.OttoSingle
 import com.letit0or1.akimaleo.notesqwe.util.webdata.SyncWorker
 import com.letit0or1.akimaleo.notesqwe.view.authorization.AuthorizationActivity
 import com.letit0or1.akimaleo.notesqwe.view.create.CreateNoteActivity
 import com.letit0or1.akimaleo.notesqwe.view.create.OnItemClickListener
 import com.letit0or1.akimaleo.notesqwe.view.view.CActivity
-import com.squareup.otto.Bus
 import com.squareup.otto.Subscribe
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -29,7 +28,6 @@ class MainActivity : CActivity() {
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mAdapter: NotesRecyclerViewAdapter
     private lateinit var mLayoutManager: StaggeredGridLayoutManager
-    var bus = Bus()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,8 +36,8 @@ class MainActivity : CActivity() {
         mRecyclerView = recycler_view
         mRecyclerView.setHasFixedSize(true)
 
-        val count = if (resources.getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) 2 else 3
-        mLayoutManager = StaggeredGridLayoutManager(count, resources.getConfiguration().orientation)
+        val count = if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) 2 else 3
+        mLayoutManager = StaggeredGridLayoutManager(count, resources.configuration.orientation)
         mRecyclerView.layoutManager = mLayoutManager as RecyclerView.LayoutManager?
 
         mAdapter = NotesRecyclerViewAdapter(ArrayList())
@@ -75,26 +73,26 @@ class MainActivity : CActivity() {
         mAdapter.notifyDataSetChanged()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == Activity.RESULT_OK) {
-            when (requestCode) {
-                REQ_CODE_CREATE -> {
-//                    var uid = data?.extras?.getString("uid")
-//                    fillData(NO2Notes.instance.getAllNotes())
-                }
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data)
-    }
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        if (resultCode == Activity.RESULT_OK) {
+//            when (requestCode) {
+//                REQ_CODE_CREATE -> {
+////                    var uid = data?.extras?.getString("uid")
+////                    fillData(NO2Notes.instance.getAllNotes())
+//                }
+//            }
+//        }
+//        super.onActivityResult(requestCode, resultCode, data)
+//    }
 
     override fun onResume() {
         super.onResume()
-        bus.register(this)
+        OttoSingle.instance.bus.register(this)
     }
 
     override fun onPause() {
         super.onPause()
-        bus.unregister(this)
+        OttoSingle.instance.bus.unregister(this)
     }
 
     @Subscribe

@@ -9,6 +9,7 @@ import com.squareup.otto.Bus
 internal class OttoSingle private constructor() {
 
     val bus: Bus
+        get
 
     init {
         bus = Bus()
