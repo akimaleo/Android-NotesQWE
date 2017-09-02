@@ -8,4 +8,8 @@
     <string name="value_cant_by_blank">This field can not be blank</string>
     <string name="invalid_credentials">Invalid credentials</string>
     <string name="email_is_incorrect">Email is incorrect</string>
+    <string name="forgot_your_password"><u>Forgot your password?</u></string>
+    <string name="sign_in_or_register">Sign in or register</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
 </resources>
