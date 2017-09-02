@@ -65,8 +65,8 @@ class MainActivity : CActivity() {
 
     override fun onStart() {
         super.onStart()
-        fillData(NO2Notes.instance.getAllNotes())
         SyncWorker.instance.syncData()
+        fillData(NO2Notes.instance.getAllNotes())
     }
 
     fun fillData(list: ArrayList<Note>) {
@@ -80,7 +80,7 @@ class MainActivity : CActivity() {
             when (requestCode) {
                 REQ_CODE_CREATE -> {
 //                    var uid = data?.extras?.getString("uid")
-                    fillData(NO2Notes.instance.getAllNotes())
+//                    fillData(NO2Notes.instance.getAllNotes())
                 }
             }
         }

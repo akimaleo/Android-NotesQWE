@@ -56,6 +56,7 @@ class NotesRecyclerViewAdapter(val mDataset: ArrayList<Note>) : RecyclerView.Ada
         holder.label.text = content[0]
 
         if (content.size > 1) {
+            holder.text.visibility = View.VISIBLE
 
             holder.text.text = ""
             for (i in 1 until content.size)
