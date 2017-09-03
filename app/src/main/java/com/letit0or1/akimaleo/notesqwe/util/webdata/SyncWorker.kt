@@ -21,7 +21,6 @@ class SyncWorker private constructor() {
     companion object {
         val instance: SyncWorker by lazy { Holder.INSTANCE }
         fun mergeNotes(first: ArrayList<Note>, second: ArrayList<Note>): ArrayList<Note> {
-            val list: ArrayList<Note> = ArrayList()
             val hashMap: java.util.HashMap<String, Note> = java.util.HashMap();
 
             for (i in first) {
