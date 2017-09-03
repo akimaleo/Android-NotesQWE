@@ -12,4 +12,8 @@ interface AuthorizationView : CView {
     fun emailError(error: String)
     fun passwordError(error: String)
     fun invalidCredentials()
+
+    fun successRestore()
+    fun failureRestore()
+
 }

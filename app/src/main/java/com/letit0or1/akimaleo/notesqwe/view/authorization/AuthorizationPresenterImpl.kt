@@ -72,4 +72,20 @@ class AuthorizationPresenterImpl(var view: AuthorizationView) : AuthorizationPre
                     }
                 }
     }
+
+    override fun restore(email: String) {
+
+        view.showLoading()
+        val restore = mAuth.sendPasswordResetEmail(email)
+
+        restore.addOnCompleteListener {
+            view.hideLoading()
+            view.successRestore()
+        }
+
+        restore.addOnFailureListener {
+            view.hideLoading()
+            view.failureRestore()
+        }
+    }
 }

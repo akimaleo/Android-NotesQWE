@@ -7,12 +7,12 @@ import android.os.Bundle
 import android.view.View
 import com.google.firebase.auth.FirebaseAuth
 import com.letit0or1.akimaleo.notesqwe.R
+import com.letit0or1.akimaleo.notesqwe.view.authorization.passrecovery.ForgotPasswordDialog
 import com.letit0or1.akimaleo.notesqwe.view.view.CActivity
 import kotlinx.android.synthetic.main.activity_authorization.*
 
 
 class AuthorizationActivity : CActivity(), AuthorizationView {
-
 
     private lateinit var mAuth: FirebaseAuth
     private lateinit var presenter: AuthorizationPresenter
@@ -21,12 +21,12 @@ class AuthorizationActivity : CActivity(), AuthorizationView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_authorization)
         presenter = AuthorizationPresenterImpl(this)
+        ForgotPasswordDialog(this@AuthorizationActivity, presenter)
     }
 
-    public fun signIn(view: View) {
+    fun signIn(view: View) {
         presenter.login(email.text.toString(), password.text.toString())
     }
-
 
     override fun reqRegister() {
         val builder = AlertDialog.Builder(this)
@@ -35,12 +35,10 @@ class AuthorizationActivity : CActivity(), AuthorizationView {
                     presenter.register(email.text.toString(), password.text.toString())
                 })
                 .setNegativeButton(android.R.string.cancel, DialogInterface.OnClickListener { dialog, id ->
-                    // User cancelled the dialog
+
                 })
-        // Create the AlertDialog object and return it
         builder.create().show()
     }
-
 
     override fun loginSuccess() {
         setResult(Activity.RESULT_OK)
@@ -61,4 +59,19 @@ class AuthorizationActivity : CActivity(), AuthorizationView {
         password.error = error
     }
 
+    override fun failureRestore() {
+        val builder = AlertDialog.Builder(this@AuthorizationActivity)
+        builder.setMessage(R.string.error)
+                .setPositiveButton(android.R.string.ok, DialogInterface.OnClickListener { dialog, id ->
+                })
+        builder.create().show()
+    }
+
+    override fun successRestore() {
+        val builder = AlertDialog.Builder(this@AuthorizationActivity)
+        builder.setMessage(R.string.email_was_sent)
+                .setPositiveButton(android.R.string.ok, DialogInterface.OnClickListener { dialog, id ->
+                })
+        builder.create().show()
+    }
 }
