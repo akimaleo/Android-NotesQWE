@@ -68,22 +68,11 @@ class MainActivity : CActivity() {
     }
 
     fun fillData(list: ArrayList<Note>) {
+        Collections.sort(list)
         mAdapter.mDataset.clear()
         mAdapter.mDataset.addAll(list)
         mAdapter.notifyDataSetChanged()
     }
-
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        if (resultCode == Activity.RESULT_OK) {
-//            when (requestCode) {
-//                REQ_CODE_CREATE -> {
-////                    var uid = data?.extras?.getString("uid")
-////                    fillData(NO2Notes.instance.getAllNotes())
-//                }
-//            }
-//        }
-//        super.onActivityResult(requestCode, resultCode, data)
-//    }
 
     override fun onResume() {
         super.onResume()
