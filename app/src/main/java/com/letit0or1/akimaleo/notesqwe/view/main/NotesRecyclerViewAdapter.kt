@@ -59,9 +59,15 @@ class NotesRecyclerViewAdapter(val mDataset: ArrayList<Note>) : RecyclerView.Ada
             holder.text.visibility = View.VISIBLE
 
             holder.text.text = ""
-            for (i in 1 until content.size)
+            for (i in 1 until content.size) {
+                if (i == content.size - 1) {
+                    holder.text.text = holder.text.text.toString() +
+                            content[i]
+                    break
+                }
                 holder.text.text = holder.text.text.toString() +
-                        "\n" + content[i]
+                        content[i] + "\n"
+            }
         } else {
             holder.text.visibility = View.GONE
         }
