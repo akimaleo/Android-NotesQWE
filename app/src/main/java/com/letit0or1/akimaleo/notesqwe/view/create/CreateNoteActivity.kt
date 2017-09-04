@@ -58,9 +58,15 @@ class CreateNoteActivity : CActivity() {
 //UPDATE OR CREATE
         } else {
 
-            SyncWorker.instance.putItem(Note(if (uid.isEmpty()) UUID.randomUUID().toString() else uid,
-                    content.text.toString(),
-                    calDate.time))
+            if (editNote.equals(Note(editNote.uid, content.text.toString(), calDate.time))) {
+                SyncWorker.instance.putItem(Note(if (uid.isEmpty()) UUID.randomUUID().toString() else uid,
+                        content.text.toString(),
+                        calDate.time))
+            } else {
+                SyncWorker.instance.putItem(Note(if (uid.isEmpty()) UUID.randomUUID().toString() else uid,
+                        content.text.toString(),
+                        Calendar.getInstance().time.time))
+            }
 
         }
         setResult(Activity.RESULT_OK)
