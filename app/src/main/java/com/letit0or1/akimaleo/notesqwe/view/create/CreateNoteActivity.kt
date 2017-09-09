@@ -29,7 +29,7 @@ class CreateNoteActivity : CActivity() {
         uid = if (intent.getStringExtra("uid") == null) "" else intent.getStringExtra("uid")
 
         calDate = if (uid.isEmpty()) {
-
+            editNote = Note()
             Calendar.getInstance().time
 
         } else {
