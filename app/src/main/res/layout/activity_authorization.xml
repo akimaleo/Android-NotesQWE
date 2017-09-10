@@ -30,12 +30,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:onClick="signIn"
+            android:onClick="onClick"
             android:text="@string/sign_in_or_register" />
 
         <TextView
+            android:id="@+id/restore_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="onClick"
             android:text="@string/forgot_your_password" />
     </LinearLayout>
 </RelativeLayout>

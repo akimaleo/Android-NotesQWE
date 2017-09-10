@@ -5,9 +5,11 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.LinearLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.letit0or1.akimaleo.notesqwe.R
-import com.letit0or1.akimaleo.notesqwe.view.authorization.passrecovery.ForgotPasswordDialog
 import com.letit0or1.akimaleo.notesqwe.view.view.CActivity
 import kotlinx.android.synthetic.main.activity_authorization.*
 
@@ -21,11 +23,34 @@ class AuthorizationActivity : CActivity(), AuthorizationView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_authorization)
         presenter = AuthorizationPresenterImpl(this)
-        ForgotPasswordDialog(this@AuthorizationActivity, presenter)
     }
 
-    fun signIn(view: View) {
-        presenter.login(email.text.toString(), password.text.toString())
+    fun onClick(view: View) {
+        when (view.id) {
+            R.id.login -> {
+                presenter.login(email.text.toString(), password.text.toString())
+            }
+            R.id.restore_password -> {
+                val ll = LinearLayout(this)
+                val lp = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+                ll.layoutParams = lp
+                val editText = EditText(this)
+                editText.setHint(R.string.email)
+                editText.layoutParams = lp
+                ll.addView(editText)
+
+                val builder = AlertDialog.Builder(this)
+                builder.setView(ll)
+                builder.setMessage(R.string.enter_password_resote)
+                        .setPositiveButton(android.R.string.ok, DialogInterface.OnClickListener { dialog, id ->
+                            presenter.restore(email.text.toString())
+                        })
+                        .setNegativeButton(android.R.string.cancel, DialogInterface.OnClickListener { dialog, id ->
+
+                        })
+                builder.create().show()
+            }
+        }
     }
 
     override fun reqRegister() {

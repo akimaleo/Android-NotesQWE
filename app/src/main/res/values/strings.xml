@@ -14,4 +14,5 @@
     <string name="email">Email</string>
     <string name="error">Error</string>
     <string name="email_was_sent">Email was sent</string>
+    <string name="enter_password_resote">Enter email for restoring password</string>
 </resources>
