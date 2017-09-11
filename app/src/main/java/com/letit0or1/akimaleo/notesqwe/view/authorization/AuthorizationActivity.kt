@@ -6,6 +6,7 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.LinearLayout
 import com.google.firebase.auth.FirebaseAuth
@@ -36,6 +37,7 @@ class AuthorizationActivity : CActivity(), AuthorizationView {
                 ll.layoutParams = lp
                 val editText = EditText(this)
                 editText.setHint(R.string.email)
+                editText.inputType = EditorInfo.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
                 editText.layoutParams = lp
                 ll.addView(editText)
 
@@ -43,7 +45,8 @@ class AuthorizationActivity : CActivity(), AuthorizationView {
                 builder.setView(ll)
                 builder.setMessage(R.string.enter_password_resote)
                         .setPositiveButton(android.R.string.ok, DialogInterface.OnClickListener { dialog, id ->
-                            presenter.restore(email.text.toString())
+                            presenter.restore(editText.text.toString())
+                            dialog.dismiss()
                         })
                         .setNegativeButton(android.R.string.cancel, DialogInterface.OnClickListener { dialog, id ->
 
