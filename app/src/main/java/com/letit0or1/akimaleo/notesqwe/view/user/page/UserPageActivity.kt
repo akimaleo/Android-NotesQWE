@@ -16,6 +16,11 @@ class UserPageActivity : AppCompatActivity() {
         email.text = FirebaseUtil.instance.firebaseAuth.currentUser!!.email
         symbols_count.text = "${NO2Notes.instance.getAllNotes().sumBy { it.text.replace('\n', ' ').length }}"
         words_count.text = "${NO2Notes.instance.getAllNotes().sumBy { countWords(it.text) }}"
+
+        log_out.setOnClickListener {
+            FirebaseUtil.instance.firebaseAuth.signOut()
+            finish()
+        }
     }
 
     fun countWords(s: String): Int {
