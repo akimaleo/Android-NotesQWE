@@ -65,17 +65,17 @@ class NO2DatabaseTest {
     fun merge() {
 
         var first = arrayOf(
-                Note("1", "DO", Calendar.getInstance().time),
-                Note("2", "NOT", Calendar.getInstance().time),
-                Note("3", "DO", Calendar.getInstance().time),
-                Note("4", "NOT", Calendar.getInstance().time)
+                Note("1", "DO", Calendar.getInstance().time.time),
+                Note("2", "NOT", Calendar.getInstance().time.time),
+                Note("3", "DO", Calendar.getInstance().time.time),
+                Note("4", "NOT", Calendar.getInstance().time.time)
         ).toCollection(ArrayList<Note>())
 
         var second = arrayOf(
-                Note("5", "DO", Calendar.getInstance().time),
-                Note("2", "DO", Calendar.getInstance().time),
-                Note("6", "DO", Calendar.getInstance().time),
-                Note("4", "DO", Calendar.getInstance().time)
+                Note("5", "DO", Calendar.getInstance().time.time),
+                Note("2", "DO", Calendar.getInstance().time.time),
+                Note("6", "DO", Calendar.getInstance().time.time),
+                Note("4", "DO", Calendar.getInstance().time.time)
         ).toCollection(ArrayList<Note>())
 
         var newList = SyncWorker.mergeNotes(first, second)
