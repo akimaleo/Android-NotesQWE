@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "237180327428",
+    "firebase_url": "https://notesqwe-68a07.firebaseio.com",
+    "project_id": "notesqwe-68a07",
+    "storage_bucket": "notesqwe-68a07.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:237180327428:android:c6b27e86557e5d79",
+        "android_client_info": {
+          "package_name": "com.letit0or1.akimaleo.notesqwe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "237180327428-33vrc7lpk3e2s0ago7b8oo315cn105k6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.letit0or1.akimaleo.notesqwe",
+            "certificate_hash": "e44dc2289b9d9cc8ce00f882fa516bd72a417f16"
+          }
+        },
+        {
+          "client_id": "237180327428-ugrletogrhh75vrhdct1heu1qotequis.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVdcuTvDTBwv2w6ZDZzdoYFZwyUrejzbY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "237180327428-ugrletogrhh75vrhdct1heu1qotequis.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
