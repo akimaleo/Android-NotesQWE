@@ -16,6 +16,7 @@ import com.letit0or1.akimaleo.notesqwe.util.webdata.SyncWorker
 import com.letit0or1.akimaleo.notesqwe.view.create.CreateNoteActivity
 import com.letit0or1.akimaleo.notesqwe.view.create.OnItemClickListener
 import com.letit0or1.akimaleo.notesqwe.view.user.authorization.AuthorizationActivity
+import com.letit0or1.akimaleo.notesqwe.view.user.page.UserPageActivity
 import com.letit0or1.akimaleo.notesqwe.view.view.CActivity
 import com.squareup.otto.Subscribe
 import kotlinx.android.synthetic.main.activity_main.*
@@ -57,7 +58,7 @@ class MainActivity : CActivity() {
             if (FirebaseUtil.instance.firebaseAuth.currentUser == null) {
                 intent = Intent(this, AuthorizationActivity::class.java)
             } else {
-                intent = Intent(this, AuthorizationActivity::class.java)
+                intent = Intent(this, UserPageActivity::class.java)
             }
             startActivity(intent)
         }
