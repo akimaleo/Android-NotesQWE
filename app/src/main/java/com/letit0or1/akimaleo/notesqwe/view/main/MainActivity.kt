@@ -23,7 +23,7 @@ import java.util.*
 
 class MainActivity : CActivity() {
 
-    val REQ_CODE_CREATE = 0;
+    private val REQ_CODE_CREATE = 0;
 
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mAdapter: NotesRecyclerViewAdapter
@@ -63,6 +63,7 @@ class MainActivity : CActivity() {
 
     override fun onStart() {
         super.onStart()
+        recycler_view.scrollTo(0, 0)
         SyncWorker.instance.syncData()
         fillData(NO2Notes.instance.getAllNotes())
     }

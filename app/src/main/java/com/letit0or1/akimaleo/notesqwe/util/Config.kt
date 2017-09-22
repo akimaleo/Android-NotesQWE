@@ -19,14 +19,14 @@ object Config {
         val resources = context.resources
 
         try {
-            val rawResource = resources.openRawResource(R.raw.config)
+            val rawResource = resources.openRawResource(R.raw.config_sample)
             val properties = Properties()
             properties.load(rawResource)
             return properties.getProperty(name)
         } catch (e: Resources.NotFoundException) {
-            Log.e(TAG, "Unable to find the config file: " + e.message)
+            Log.e(TAG, "Unable to find the config_sample file: " + e.message)
         } catch (e: IOException) {
-            Log.e(TAG, "Failed to open config file.")
+            Log.e(TAG, "Failed to open config_sample file.")
         }
 
         return null
