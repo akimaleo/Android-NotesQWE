@@ -31,7 +31,8 @@
         </receiver>
 
         <activity android:name=".view.authorization.AuthorizationActivity" />
-        <activity android:name=".view.create.CreateNoteActivity"></activity>
+        <activity android:name=".view.create.CreateNoteActivity" />
+        <activity android:name=".view.user.page.UserPageActivity"></activity>
     </application>
 
 </manifest>

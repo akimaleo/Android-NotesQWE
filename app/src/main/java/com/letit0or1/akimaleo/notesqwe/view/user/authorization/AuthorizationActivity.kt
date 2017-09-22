@@ -1,4 +1,4 @@
-package com.letit0or1.akimaleo.notesqwe.view.authorization
+package com.letit0or1.akimaleo.notesqwe.view.user.authorization
 
 import android.app.Activity
 import android.app.AlertDialog
