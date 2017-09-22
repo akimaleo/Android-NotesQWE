@@ -30,7 +30,7 @@ class NO2DatabaseTest {
         db.clearDb()
 
         //CREATE AND WRITE
-        val noteBeforeSave = Note(UUID.randomUUID().toString(), "SAMPLE TEXT", Calendar.getInstance().time)
+        val noteBeforeSave = Note(UUID.randomUUID().toString(), "SAMPLE TEXT", Calendar.getInstance().time.time)
         db.save(noteBeforeSave)
         //READ
         val noteAfterSave: Note = db.getAllNotes().get(0)
