@@ -17,7 +17,6 @@ import kotlinx.android.synthetic.main.activity_authorization.*
 
 class AuthorizationActivity : CActivity(), AuthorizationView {
 
-    private lateinit var mAuth: FirebaseAuth
     private lateinit var presenter: AuthorizationPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {

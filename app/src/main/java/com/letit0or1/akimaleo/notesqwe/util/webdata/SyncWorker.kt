@@ -83,10 +83,8 @@ class SyncWorker private constructor() {
                 override fun success(list: ArrayList<Note>) {
                     val newList = mergeNotes(list, NO2Notes.instance.getAllNotes())
                     reference().setValue(newList)
-                    NO2Notes.instance.clearDb()
 
-                    if (newList.size > 0)
-                        NO2Notes.instance.clearAndSave(newList)
+                    NO2Notes.instance.clearAndSave(newList)
 
                     OttoSingle.instance.bus.post(BroadcastEvent())
                     reference().onDisconnect()
@@ -112,9 +110,6 @@ class SyncWorker private constructor() {
                 if (value == null) {
                     value = ArrayList()
                 }
-
-                NO2Notes.instance.clearAndSave(value)
-
                 handler?.success(value)
             }
 
@@ -126,7 +121,7 @@ class SyncWorker private constructor() {
         })
     }
 
-    //GET FIREBASE REFERENCE
+    //GET FIREBASE LIST REFERENCE
     private fun reference(): DatabaseReference =
-            FirebaseUtil.instance.firebaseDatabase.getReference(FirebaseUtil.instance.firebaseAuth.currentUser?.uid)
+            FirebaseUtil.instance.firebaseDatabase.getReference(FirebaseUtil.instance.firebaseAuth.currentUser?.uid).child("list")
 }

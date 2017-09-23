@@ -66,6 +66,9 @@ class AuthorizationPresenterImpl(var view: AuthorizationView) : AuthorizationPre
 
                         } catch (e: Exception) {
                             Log.e("FIREBASE AUTH SIGN UP", e.message)
+                            if (e.message!!.contains("WEAK_PASSWORD", true)) {
+                                view.passwordError(context.getString(R.string.error_weak_password))
+                            }
                         }
                     } else {
                         view.loginSuccess()

@@ -71,8 +71,8 @@ class MainActivity : CActivity() {
     override fun onStart() {
         super.onStart()
         recycler_view.scrollTo(0, 0)
-        SyncWorker.instance.syncData()
         fillData(NO2Notes.instance.getAllNotes())
+        SyncWorker.instance.syncData()
     }
 
     fun fillData(list: ArrayList<Note>) {
