@@ -7,6 +7,7 @@ import io.reactivex.Observable
 
 /**
  * Created by akimaleo on 22.08.17.
+ * @see SyncWorker
  */
 
 class SyncWorkerImpl(var userId: String) : SyncWorker {
