@@ -1,4 +1,4 @@
-package com.letit0or1.akimaleo.notesqwe
+package com.letit0or1.akimaleo.notesqwe.presentation.common
 
 import android.app.Application
 import android.support.multidex.MultiDexApplication

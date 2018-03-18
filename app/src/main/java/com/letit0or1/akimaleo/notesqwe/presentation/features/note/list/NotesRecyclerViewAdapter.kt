@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.letit0or1.akimaleo.notesqwe.Note
+import com.letit0or1.akimaleo.notesqwe.util.database.Note
 import com.letit0or1.akimaleo.notesqwe.R
 import com.letit0or1.akimaleo.notesqwe.view.create.OnItemClickListener
 import java.text.SimpleDateFormat

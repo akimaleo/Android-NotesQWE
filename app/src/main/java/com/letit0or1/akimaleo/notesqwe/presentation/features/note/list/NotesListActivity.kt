@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
-import com.letit0or1.akimaleo.notesqwe.Note
+import com.letit0or1.akimaleo.notesqwe.util.database.Note
 import com.letit0or1.akimaleo.notesqwe.R
 import com.letit0or1.akimaleo.notesqwe.util.FirebaseUtil
 import com.letit0or1.akimaleo.notesqwe.util.database.NO2Notes
@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 
-class MainActivity : BaseActivity() {
+class NotesListActivity : BaseActivity() {
 
     private val REQ_CODE_CREATE = 0;
 
@@ -48,7 +48,7 @@ class MainActivity : BaseActivity() {
 
         mAdapter.onClickListener = object : OnItemClickListener {
             override fun onClick(view: View, o: Any) {
-                val intent = Intent(this@MainActivity, CreateNoteActivity::class.java)
+                val intent = Intent(this@NotesListActivity, CreateNoteActivity::class.java)
                 intent.putExtra("uid", (o as Note).uid)
                 startActivityForResult(intent, REQ_CODE_CREATE)
             }

@@ -1,6 +1,6 @@
 package com.letit0or1.akimaleo.notesqwe.util.webdata
 
-import com.letit0or1.akimaleo.notesqwe.Note
+import com.letit0or1.akimaleo.notesqwe.util.database.Note
 
 /**
  * Created by akimaleo on 22.08.17.

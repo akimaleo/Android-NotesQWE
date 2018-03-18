@@ -1,7 +1,6 @@
 package com.letit0or1.akimaleo.notesqwe.util.database
 
 import android.content.Context
-import com.letit0or1.akimaleo.notesqwe.Note
 import com.letit0or1.akimaleo.notesqwe.util.Config
 import org.dizitart.no2.Nitrite
 import org.dizitart.no2.objects.ObjectRepository

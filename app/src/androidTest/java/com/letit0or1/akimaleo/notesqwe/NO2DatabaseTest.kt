@@ -2,6 +2,7 @@ package com.letit0or1.akimaleo.notesqwe
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
+import com.letit0or1.akimaleo.notesqwe.util.database.Note
 import com.letit0or1.akimaleo.notesqwe.util.database.NO2Notes
 import com.letit0or1.akimaleo.notesqwe.util.webdata.SyncWorker
 import org.junit.Assert.assertEquals

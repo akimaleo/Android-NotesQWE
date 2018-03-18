@@ -1,4 +1,4 @@
-package com.letit0or1.akimaleo.notesqwe.view.widget;
+package com.letit0or1.akimaleo.notesqwe.presentation.widget;
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;

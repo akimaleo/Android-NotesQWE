@@ -2,7 +2,7 @@ package com.letit0or1.akimaleo.notesqwe.view.create
 
 import android.app.Activity
 import android.os.Bundle
-import com.letit0or1.akimaleo.notesqwe.Note
+import com.letit0or1.akimaleo.notesqwe.util.database.Note
 import com.letit0or1.akimaleo.notesqwe.R
 import com.letit0or1.akimaleo.notesqwe.util.database.NO2Notes
 import com.letit0or1.akimaleo.notesqwe.util.webdata.SyncWorker

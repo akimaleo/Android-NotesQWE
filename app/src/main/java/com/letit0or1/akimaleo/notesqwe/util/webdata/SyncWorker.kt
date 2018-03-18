@@ -1,7 +1,7 @@
 package com.letit0or1.akimaleo.notesqwe.util.webdata
 
 import com.google.firebase.database.*
-import com.letit0or1.akimaleo.notesqwe.Note
+import com.letit0or1.akimaleo.notesqwe.util.database.Note
 import com.letit0or1.akimaleo.notesqwe.util.FirebaseUtil
 import com.letit0or1.akimaleo.notesqwe.util.database.NO2Notes
 import com.letit0or1.akimaleo.notesqwe.util.ottobus.BroadcastEvent
