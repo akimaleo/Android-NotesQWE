@@ -9,7 +9,7 @@ import io.reactivex.Observable
 interface SyncWorker {
     fun add(note: Note)
 
-    fun addAll(notes: List<Note>)
+    fun setAll(notes: List<Note>)
 
     fun deleteItem(note: Note)
 

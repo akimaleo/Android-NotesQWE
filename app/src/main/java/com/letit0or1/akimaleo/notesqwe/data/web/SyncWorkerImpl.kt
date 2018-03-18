@@ -9,29 +9,59 @@ import io.reactivex.Observable
  * Created by akimaleo on 22.08.17.
  */
 
-class SyncWorkerImpl : SyncWorker {
+class SyncWorkerImpl(var userId: String) : SyncWorker {
 
     override fun add(note: Note) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (isAuthorized) {
+            val listRef = reference.push()
+            listRef.setValue(note)
+        }
     }
 
-    override fun addAll(notes: List<Note>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun setAll(notes: List<Note>) {
+        if (isAuthorized) {
+            reference.setValue(notes)
+        }
     }
 
     override fun deleteItem(note: Note) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (isAuthorized) {
+            reference.child(note.uid).removeValue()
+        }
     }
 
     override fun getAll(): Observable<List<Note>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        var observable: Observable<List<Note>> = Observable.create<List<Note>> { }
+        if (isAuthorized) {
+            observable = Observable.create<List<Note>> {
+                reference.addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        val t = object : GenericTypeIndicator<ArrayList<Note>>() {
+                        }
+                        var value = dataSnapshot.getValue(t)
+                        if (value == null) {
+                            value = ArrayList()
+                        }
+                        it.onNext(value)
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        it.onError(error.toException())
+                    }
+                })
+            }
+        }
+        return observable
     }
 
-    fun isAuthorized(): Boolean = FirebaseUtil.instance.firebaseAuth.currentUser != null
+    /**
+     * Check if user is authorized
+     * also if synchronization is enabled
+     */
+    private val isAuthorized: Boolean get() = FirebaseUtil.instance.firebaseAuth.currentUser != null
 
     /**
      * GET FIREBASE LIST REFERENCE
      */
-    private fun reference(): DatabaseReference =
-            FirebaseUtil.instance.firebaseDatabase.getReference(FirebaseUtil.instance.firebaseAuth.currentUser?.uid).child("list")
+    private val reference: DatabaseReference get() = FirebaseUtil.instance.firebaseDatabase.getReference(userId).child("list")
 }
