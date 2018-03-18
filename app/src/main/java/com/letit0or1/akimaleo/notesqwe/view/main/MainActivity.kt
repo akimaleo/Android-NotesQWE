@@ -17,13 +17,13 @@ import com.letit0or1.akimaleo.notesqwe.view.create.CreateNoteActivity
 import com.letit0or1.akimaleo.notesqwe.view.create.OnItemClickListener
 import com.letit0or1.akimaleo.notesqwe.view.user.authorization.AuthorizationActivity
 import com.letit0or1.akimaleo.notesqwe.view.user.page.UserPageActivity
-import com.letit0or1.akimaleo.notesqwe.view.view.CActivity
+import com.letit0or1.akimaleo.notesqwe.view.view.BaseActivity
 import com.squareup.otto.Subscribe
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 
-class MainActivity : CActivity() {
+class MainActivity : BaseActivity() {
 
     private val REQ_CODE_CREATE = 0;
 

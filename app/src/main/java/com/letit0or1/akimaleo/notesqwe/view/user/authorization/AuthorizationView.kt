@@ -1,16 +1,20 @@
 package com.letit0or1.akimaleo.notesqwe.view.user.authorization
 
-import com.letit0or1.akimaleo.notesqwe.view.view.CView
+import android.support.annotation.StringRes
+import com.letit0or1.akimaleo.notesqwe.view.view.BaseView
 
 /**
  * Created by akimaleo on 23.08.17.
  */
 
-interface AuthorizationView : CView {
+interface AuthorizationView : BaseView {
     fun reqRegister()
     fun loginSuccess()
-    fun emailError(error: String)
-    fun passwordError(error: String)
+
+    fun emailError(@StringRes error: Int)
+
+    fun passwordError(@StringRes error: Int)
+
     fun invalidCredentials()
 
     fun successRestore()

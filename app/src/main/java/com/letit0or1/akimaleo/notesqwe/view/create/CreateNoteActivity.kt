@@ -6,12 +6,12 @@ import com.letit0or1.akimaleo.notesqwe.Note
 import com.letit0or1.akimaleo.notesqwe.R
 import com.letit0or1.akimaleo.notesqwe.util.database.NO2Notes
 import com.letit0or1.akimaleo.notesqwe.util.webdata.SyncWorker
-import com.letit0or1.akimaleo.notesqwe.view.view.CActivity
+import com.letit0or1.akimaleo.notesqwe.view.view.BaseActivity
 import kotlinx.android.synthetic.main.activity_create_note.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CreateNoteActivity : CActivity() {
+class CreateNoteActivity : BaseActivity() {
 
     private lateinit var uid: String
     private lateinit var calDate: Date

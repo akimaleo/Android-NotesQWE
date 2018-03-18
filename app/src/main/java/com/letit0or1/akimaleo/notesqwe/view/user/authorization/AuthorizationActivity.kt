@@ -9,13 +9,12 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.LinearLayout
-import com.google.firebase.auth.FirebaseAuth
 import com.letit0or1.akimaleo.notesqwe.R
-import com.letit0or1.akimaleo.notesqwe.view.view.CActivity
+import com.letit0or1.akimaleo.notesqwe.view.view.BaseActivity
 import kotlinx.android.synthetic.main.activity_authorization.*
 
 
-class AuthorizationActivity : CActivity(), AuthorizationView {
+class AuthorizationActivity : BaseActivity(), AuthorizationView {
 
     private lateinit var presenter: AuthorizationPresenter
 
@@ -78,12 +77,12 @@ class AuthorizationActivity : CActivity(), AuthorizationView {
         builder.create().show()
     }
 
-    override fun emailError(error: String) {
-        email.error = error
+    override fun emailError(error: Int) {
+        password.error = getString(error)
     }
 
-    override fun passwordError(error: String) {
-        password.error = error
+    override fun passwordError(error: Int) {
+        password.error = getString(error)
     }
 
     override fun failureRestore() {
