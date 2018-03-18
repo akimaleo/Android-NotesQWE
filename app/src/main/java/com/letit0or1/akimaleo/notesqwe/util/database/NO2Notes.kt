@@ -26,7 +26,7 @@ internal class NO2Notes private constructor() {
     constructor(context: Context) : this() {
         db = Nitrite.builder()
                 .compressed()
-                .filePath(context.getFilesDir().getPath() + "test" + ".db")
+                .filePath(context.filesDir.getPath() + "test" + ".db")
                 .openOrCreate("test", "test")
         repository = db.getRepository(Note::class.java)
     }
