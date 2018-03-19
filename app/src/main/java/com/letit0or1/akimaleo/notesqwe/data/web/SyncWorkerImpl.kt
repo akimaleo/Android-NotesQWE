@@ -4,13 +4,14 @@ import com.google.firebase.database.*
 import com.letit0or1.akimaleo.notesqwe.data.cache.Note
 import com.letit0or1.akimaleo.notesqwe.util.FirebaseUtil
 import io.reactivex.Observable
+import javax.inject.Inject
 
 /**
  * Created by akimaleo on 22.08.17.
  * @see SyncWorker
  */
 
-class SyncWorkerImpl(var userId: String) : SyncWorker {
+class SyncWorkerImpl @Inject constructor(var userId: String) : SyncWorker {
 
     override fun add(note: Note) {
         if (isAuthorized) {

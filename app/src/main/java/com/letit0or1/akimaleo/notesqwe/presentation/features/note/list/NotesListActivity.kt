@@ -8,6 +8,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
 import com.letit0or1.akimaleo.notesqwe.util.database.Note
 import com.letit0or1.akimaleo.notesqwe.R
+import com.letit0or1.akimaleo.notesqwe.data.DataAccessPoint
 import com.letit0or1.akimaleo.notesqwe.util.FirebaseUtil
 import com.letit0or1.akimaleo.notesqwe.util.database.NO2Notes
 import com.letit0or1.akimaleo.notesqwe.util.ottobus.BroadcastEvent
@@ -25,7 +26,6 @@ import java.util.*
 
 class NotesListActivity : BaseActivity() {
 
-    private val REQ_CODE_CREATE = 0;
 
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mAdapter: NotesRecyclerViewAdapter
@@ -35,16 +35,31 @@ class NotesListActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        login.setOnClickListener {
+            val intent: Intent = if (FirebaseUtil.instance.firebaseAuth.currentUser == null) {
+                Intent(this, AuthorizationActivity::class.java)
+            } else {
+                Intent(this, UserPageActivity::class.java)
+            }
+            startActivity(intent)
+        }
+        create.setOnClickListener {
+            val intent = Intent(this, CreateNoteActivity::class.java)
+            startActivityForResult(intent, REQ_CODE_CREATE)
+        }
+    }
+
+    private fun init() {
+        //RECYCLER VIEW INITIALIZATION
         mRecyclerView = recycler_view
         mRecyclerView.setHasFixedSize(true)
 
         val count = if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) 2 else 3
         mLayoutManager = StaggeredGridLayoutManager(count, resources.configuration.orientation)
-        mRecyclerView.layoutManager = mLayoutManager as RecyclerView.LayoutManager?
+        mRecyclerView.layoutManager = mLayoutManager
 
         mAdapter = NotesRecyclerViewAdapter(ArrayList())
-        mRecyclerView.setAdapter(mAdapter)
-
+        mRecyclerView.adapter = mAdapter
 
         mAdapter.onClickListener = object : OnItemClickListener {
             override fun onClick(view: View, o: Any) {
@@ -53,19 +68,7 @@ class NotesListActivity : BaseActivity() {
                 startActivityForResult(intent, REQ_CODE_CREATE)
             }
         }
-        login.setOnClickListener {
-            val intent: Intent
-            if (FirebaseUtil.instance.firebaseAuth.currentUser == null) {
-                intent = Intent(this, AuthorizationActivity::class.java)
-            } else {
-                intent = Intent(this, UserPageActivity::class.java)
-            }
-            startActivity(intent)
-        }
-        create.setOnClickListener {
-            val intent = Intent(this, CreateNoteActivity::class.java)
-            startActivityForResult(intent, REQ_CODE_CREATE)
-        }
+
     }
 
     override fun onStart() {
@@ -95,5 +98,9 @@ class NotesListActivity : BaseActivity() {
     @Subscribe
     fun answerAvailable(event: BroadcastEvent) {
         fillData(NO2Notes.instance.getAllNotes())
+    }
+
+    companion object {
+        private const val REQ_CODE_CREATE = 0
     }
 }
