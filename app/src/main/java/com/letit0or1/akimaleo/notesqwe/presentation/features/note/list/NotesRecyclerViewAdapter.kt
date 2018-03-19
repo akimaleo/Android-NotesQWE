@@ -1,5 +1,6 @@
 package com.letit0or1.akimaleo.notesqwe.view.main
 
+import android.annotation.SuppressLint
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -15,31 +16,19 @@ import java.util.*
  * Created by akimaleo on 16.08.17.
  */
 
-class NotesRecyclerViewAdapter(val mDataset: ArrayList<Note>) : RecyclerView.Adapter<NotesRecyclerViewAdapter.ViewHolder>() {
+class NotesRecyclerViewAdapter(val mDataSet: ArrayList<Note>) : RecyclerView.Adapter<NotesRecyclerViewAdapter.ViewHolder>() {
 
-    var onClickListener: OnItemClickListener
-        set
-
-    private val formaterDate: SimpleDateFormat
-
-    init {
-        onClickListener = object : OnItemClickListener {
-            override fun onClick(view: View, o: Any) {
-            }
+    var onClickListener: OnItemClickListener = object : OnItemClickListener {
+        override fun onClick(view: View, o: Any) {
         }
-        formaterDate = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
     }
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var label: TextView
-        var text: TextView
-        var date: TextView
+    private val formatterDate: SimpleDateFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
 
-        init {
-            label = view.findViewById(R.id.label) as TextView
-            text = view.findViewById(R.id.text) as TextView
-            date = view.findViewById(R.id.time) as TextView
-        }
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        var label: TextView = view.findViewById(R.id.label) as TextView
+        var text: TextView = view.findViewById(R.id.text) as TextView
+        var date: TextView = view.findViewById(R.id.time) as TextView
     }
 
     override fun onCreateViewHolder(parent: ViewGroup,
@@ -49,8 +38,9 @@ class NotesRecyclerViewAdapter(val mDataset: ArrayList<Note>) : RecyclerView.Ada
         return ViewHolder(v)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val note = mDataset[position]
+        val note = mDataSet[position]
 
         val content = note.text.split(Regex("\n"), 0)
         holder.label.text = content[0]
@@ -61,22 +51,19 @@ class NotesRecyclerViewAdapter(val mDataset: ArrayList<Note>) : RecyclerView.Ada
             holder.text.text = ""
             for (i in 1 until content.size) {
                 if (i == content.size - 1) {
-                    holder.text.text = holder.text.text.toString() +
-                            content[i]
+                    holder.text.text = "${holder.text.text} ${content[i]}"
                     break
                 }
-                holder.text.text = holder.text.text.toString() +
-                        content[i] + "\n"
+                holder.text.text = "${holder.text.text} ${content[i]}\n"
             }
         } else {
             holder.text.visibility = View.GONE
         }
 
-        holder.date.text = formaterDate.format(note.editDate)
+        holder.date.text = formatterDate.format(note.editDate)
         holder.itemView.setOnClickListener { v -> onClickListener.onClick(v!!, note) }
     }
 
-    override fun getItemCount(): Int {
-        return mDataset.size
-    }
+    override fun getItemCount() = mDataSet.size
+
 }

@@ -77,8 +77,8 @@ class NotesListActivity : BaseActivity() {
 
     fun fillData(list: ArrayList<Note>) {
         Collections.sort(list)
-        mAdapter.mDataset.clear()
-        mAdapter.mDataset.addAll(list)
+        mAdapter.mDataSet.clear()
+        mAdapter.mDataSet.addAll(list)
         mAdapter.notifyDataSetChanged()
     }
 
