@@ -65,4 +65,27 @@ class SyncWorkerImpl(var userId: String) : SyncWorker {
      * GET FIREBASE LIST REFERENCE
      */
     private val reference: DatabaseReference get() = FirebaseUtil.instance.firebaseDatabase.getReference(userId).child("list")
+
+    companion object {
+        fun mergeNotes(first: ArrayList<Note>, second: ArrayList<Note>): ArrayList<Note> {
+            val hashMap: java.util.HashMap<String, Note> = java.util.HashMap()
+
+            for (i in first) {
+                hashMap[i.uid] = i
+                for (j in second) {
+
+                    if (i.uid == j.uid) {
+                        hashMap[i.uid] = if (i.editDate > j.editDate) i else j
+                        continue
+                    }
+
+                    if (hashMap.containsKey(j.uid)) continue
+
+                    hashMap.put(j.uid, j)
+                }
+            }
+            return ArrayList(hashMap.values)
+        }
+
+    }
 }

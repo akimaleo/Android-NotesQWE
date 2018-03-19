@@ -10,6 +10,7 @@ import io.reactivex.Flowable
  */
 @Dao
 interface NoteDao {
+
     @Query("SELECT * FROM `note`")
     fun getAll(): Flowable<List<Note>>
 
@@ -18,4 +19,7 @@ interface NoteDao {
 
     @Insert
     fun insertAll(notes: Iterable<Note>)
+
+    @Query("DELETE FROM note")
+    fun dropTable()
 }
