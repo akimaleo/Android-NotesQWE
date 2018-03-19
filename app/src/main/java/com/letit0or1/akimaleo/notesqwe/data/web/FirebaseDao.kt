@@ -8,7 +8,7 @@ import io.reactivex.Observable
  * Remote Firebase database common action
  */
 
-interface SyncWorker {
+interface FirebaseDao {
     /**
      * Add only item
      */
