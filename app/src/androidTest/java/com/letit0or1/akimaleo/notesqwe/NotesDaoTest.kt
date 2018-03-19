@@ -7,7 +7,7 @@ import org.junit.Before
 import org.junit.runner.RunWith
 import android.arch.persistence.room.Room
 import com.letit0or1.akimaleo.notesqwe.data.cache.Note
-import com.letit0or1.akimaleo.notesqwe.data.web.SyncWorkerImpl.Companion.mergeNotes
+import com.letit0or1.akimaleo.notesqwe.data.web.FirebaseDaoImpl.Companion.mergeNotes
 import junit.framework.Assert.assertTrue
 import org.junit.After
 import org.junit.Assert

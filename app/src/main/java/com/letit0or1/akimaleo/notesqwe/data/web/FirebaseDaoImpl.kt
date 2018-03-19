@@ -7,10 +7,10 @@ import io.reactivex.Observable
 
 /**
  * Created by akimaleo on 22.08.17.
- * @see SyncWorker
+ * @see FirebaseDao
  */
 
-class SyncWorkerImpl(var userId: String) : SyncWorker {
+class FirebaseDaoImpl(var userId: String) : FirebaseDao {
 
     override fun add(note: Note) {
         if (isAuthorized) {
@@ -86,6 +86,5 @@ class SyncWorkerImpl(var userId: String) : SyncWorker {
             }
             return ArrayList(hashMap.values)
         }
-
     }
 }
