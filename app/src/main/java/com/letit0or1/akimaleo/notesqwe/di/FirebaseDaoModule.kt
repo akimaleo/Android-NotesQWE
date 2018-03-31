@@ -1,4 +1,4 @@
-package com.letit0or1.akimaleo.notesqwe.presentation.di
+package com.letit0or1.akimaleo.notesqwe.di
 
 import com.letit0or1.akimaleo.notesqwe.data.web.FirebaseDaoImpl
 import dagger.Module

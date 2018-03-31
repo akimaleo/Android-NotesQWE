@@ -1,9 +1,9 @@
 package com.letit0or1.akimaleo.notesqwe.presentation.common
 
 import android.support.multidex.MultiDexApplication
-import com.letit0or1.akimaleo.notesqwe.presentation.di.AppComponent
-import com.letit0or1.akimaleo.notesqwe.presentation.di.AppModule
-import com.letit0or1.akimaleo.notesqwe.presentation.di.DaggerAppComponent
+import com.letit0or1.akimaleo.notesqwe.di.AppComponent
+import com.letit0or1.akimaleo.notesqwe.di.AppModule
+import com.letit0or1.akimaleo.notesqwe.di.DaggerAppComponent
 import com.letit0or1.akimaleo.notesqwe.util.database.NO2Notes
 
 
